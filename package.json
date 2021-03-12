@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-wlmio",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Widgetlords",
+  "license": "MIT",
+  "homepage": "https://widgetlords.com",
+  "keywords": [
+    "node-red",
+    "widgetlords",
+    "wl-mio"
+  ],
+  "node-red": {
+    "nodes": {
+      "wlmio": "wlmio.js"
+    }
+  },
+  "dependencies": {
+    "wlmiojs": "~1.0.0"
+  }
+}

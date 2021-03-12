@@ -1,0 +1,444 @@
+<script type="text/html" data-template-name="wlmio-register">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-regname"><i class="fa fa-bookmark"></i> Register</label>
+    <input type="text" id="node-input-regname" placeholder="Register">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-regtype"><i class="fa fa-bookmark"></i> Type</label>
+    <select id="node-input-regtype">
+      <option value="0">EMPTY</option>
+      <option value="9">UINT32</option>
+      <option value="10">UINT16</option>
+      <option value="11">UINT8</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-register">
+    <p>Used to directly access the registers of WL-MIO modules</p>
+    <p><code>msg.payload</code> is the array of values to be written to the register</p>
+    <p>Leaving <code>msg.payload</code> out or set as null is equivalent to a read-only access.</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-register", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      regname: { value: "", validate: v => !!v },
+      regtype: { value: "0" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+	  align: "left",
+    label: function() {
+      return this.name || "wlmio-register";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6010">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6010">
+    <p>5V DC Power Supply Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6010", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6010";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6030">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6030">
+    <p>4 Point Relay Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6030", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "arrow-in.png",
+    align: "right",
+    label: function() {
+      return this.name || "wlmio-6030";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6040">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-mode"><i class="fa fa-bookmark"></i> Mode</label>
+    <select id="node-input-mode">
+      <option value="0">5V</option>
+      <option value="1">20mA</option>
+      <option value="2">10V</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6040">
+    <p>4 Point Analog Input (5VDC, 10VDC, 20mA) Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6040", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" },
+      mode: { value: "0" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6040";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6050">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-mode"><i class="fa fa-bookmark"></i> Mode</label>
+    <select id="node-input-mode">
+      <option value="0">Source</option>
+      <option value="1">Sink</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6050">
+    <p>4 Point Current Output Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6050", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" },
+      mode: { value: "0" }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "arrow-in.png",
+    align: "right",
+    label: function() {
+      return this.name || "wlmio-6050";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6060">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-mode"><i class="fa fa-bookmark"></i> Mode</label>
+    <select id="node-input-mode">
+      <option value="0">Discrete</option>
+      <option value="1">Frequency</option>
+      <option value="2">Pulse Counter</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-bias"><i class="fa fa-bookmark"></i> Bias</label>
+    <select id="node-input-bias">
+      <option value="0">None</option>
+      <option value="1">PNP</option>
+      <option value="2">NPN</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-polarity"><i class="fa fa-bookmark"></i> Polarity</label>
+    <select id="node-input-polarity">
+      <option value="0">Rising Edge</option>
+      <option value="1">Falling Edge</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6060">
+    <p>4 Point Digital Input/Pulse Counter/Frequency Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6060", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" },
+      mode: { value: "0" },
+      bias: { value: "0" },
+      polarity: { value: "0" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6060";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6070">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6070">
+    <p>4 Point Voltage Output Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6070", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "arrow-in.png",
+    align: "right",
+    label: function() {
+      return this.name || "wlmio-6070";
+    }
+  });
+</script>
+
+
+<script type="text/html" data-template-name="wlmio-6080">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-beta"><i class="fa fa-bookmark"></i> Beta</label>
+    <input type="text" id="node-input-beta" placeholder="Beta">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-t0"><i class="fa fa-bookmark"></i> t0</label>
+    <input type="text" id="node-input-t0" placeholder="t0">
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6080">
+    <p>8 Point Thermistor Input Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6080", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" },
+      beta: { value: "3380" },
+      t0: { value: "29815" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6080";
+    }
+  });
+</script>
+
