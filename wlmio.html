@@ -442,3 +442,72 @@
   });
 </script>
 
+
+<script type="text/html" data-template-name="wlmio-6090">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">T1</option>
+      <option value="8">T2</option>
+      <option value="9">T3</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-mode"><i class="fa fa-bookmark"></i> Type</label>
+    <select id="node-input-mode">
+      <option value="0">mV</option>
+      <option value="1">B</option>
+      <option value="2">E</option>
+      <option value="3">J</option>
+      <option value="4">K</option>
+      <option value="5">N</option>
+      <option value="6">R</option>
+      <option value="7">S</option>
+      <option value="8">T</option>
+    </select>
+  </div> 
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6090">
+    <p>6 Point Thermocouple/Voltage Input Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6090", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" },
+      mode: { value: "0" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6090";
+    }
+  });
+</script>
+
