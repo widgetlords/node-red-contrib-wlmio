@@ -15,6 +15,10 @@
       "wlmio": "wlmio.js"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/widgetlords/node-red-contrib-wlmio.git"
+  },
   "dependencies": {
     "wlmiojs": "~1.0.0"
   }
