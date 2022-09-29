@@ -47,7 +47,7 @@ module.exports = function(RED)
     const node = this;
     const id = parseInt(config.nid);
     const register = config.regname;
-    const type = parseInt(config.regtype);
+    let type = parseInt(config.regtype);
         
     node.on("input", function(msg, send, done)
       {
