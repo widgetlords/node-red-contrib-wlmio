@@ -76,6 +76,28 @@ module.exports = function(RED)
   RED.nodes.registerType("wlmio-register", WLMIORegister);
 
 
+  function WLMIOStatus(config) {
+    RED.nodes.createNode(this, config);
+    const node = this;
+
+    node.on("input", function(msg, send, done) {
+      const id = msg.payload;
+      if(!Number.isInteger(id) || id < 0 || id > 127) {
+        done("Invalid WLMIO node ID");
+        return;
+      }
+      const status = {
+        status: wlmioNodes[id].status ? { ...wlmioNodes[id].status } : null,
+        info: wlmioNodes[id].info ? { ...wlmioNodes[id].info } : null
+      };
+      msg.payload = status;
+      send(msg);
+      done();
+    });
+  }
+  RED.nodes.registerType("wlmio-status", WLMIOStatus);
+
+
   function WLMIO6010(config)
   {
     RED.nodes.createNode(this, config);

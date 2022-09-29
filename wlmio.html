@@ -54,6 +54,41 @@
 </script>
 
 
+<script type="text/html" data-template-name="wlmio-status">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-status">
+  <p>Used to access the status and information of WL-MIO modules</p>
+  <p>Send a message with the payload set to the WL-MIO node ID to receive this information.</p>
+  <p><code>msg.payload.status</code> will contain basic info like uptime, health, and status flags.</p>
+  <p><code>msg.payload.info</code> will contain info like the module name, hardware version, and software version.</p>
+  <p>If <code>msg.payload.status</code> is <code>null</code> it means that the requested module is not present.</p>
+  <p>If <code>msg.payload.info</code> is <code>null</code> but <code>msg.payload.status</code> is not it means that the module info is not yet available or could not be retrieved.</p>
+  <p>If <code>msg.payload.status.uptime</code> moves backwards it means a module was swapped or rebooted.</p>
+</script>
+
+
+<script type="text/javascript">
+RED.nodes.registerType("wlmio-status", {
+  category: "WLMIO",
+  color: "#008cfd",
+  defaults: { name: { value: "" } },
+  inputs: 1,
+  outputs: 1,
+  icon: "alert.svg",
+  align: "left",
+  label: function() {
+    return this.name || "wlmio-status";
+  }
+});
+</script>
+
+
 <script type="text/html" data-template-name="wlmio-6010">
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -482,7 +517,7 @@
       <option value="7">S</option>
       <option value="8">T</option>
     </select>
-  </div> 
+  </div>
 </script>
 
 
