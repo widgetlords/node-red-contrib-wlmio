@@ -17,9 +17,9 @@ wlmiojs.setStatusCallback(function(id, oldStatus, newStatus)
     {
       wlmioNodes[id].status = newStatus;
       wlmiojs.getInfo(id, function(r, info)
-        { 
-          if(r >= 0) 
-          { 
+        {
+          if(r >= 0)
+          {
             wlmioNodes[id].info = wlmiojs.unpackNodeInfo(info);
             wlmioNodes[id].callbacks.forEach(cb => cb());
           }
@@ -29,7 +29,7 @@ wlmiojs.setStatusCallback(function(id, oldStatus, newStatus)
       );
     }
     else if(newStatus.mode == 7)
-    { 
+    {
       wlmioNodes[id].status = undefined;
       wlmioNodes[id].info = undefined;
     }
@@ -48,7 +48,7 @@ module.exports = function(RED)
     const id = parseInt(config.nid);
     const register = config.regname;
     let type = parseInt(config.regtype);
-        
+
     node.on("input", function(msg, send, done)
       {
         const value = msg.payload;
@@ -126,7 +126,7 @@ module.exports = function(RED)
             if(r < 0)
             { done("Error communicating with module"); }
             else
-            { 
+            {
               const result = wlmiojs.unpackRegisterAccess(b);
               if(result.type != 10)
               { done("Error communicating with module"); }
@@ -171,7 +171,7 @@ module.exports = function(RED)
         }
 
         const buffer = wlmiojs.packRegisterAccess(11, [ msg.payload ]);
-        const reg = "ch" + channel + ".output"; 
+        const reg = "ch" + channel + ".output";
         const r = wlmiojs.registerAccess(id, reg, buffer, function(r, b)
           {
             if(r < 0)
@@ -219,7 +219,7 @@ module.exports = function(RED)
             if(r < 0)
             { done("Error communicating with module"); }
             else
-            { 
+            {
               const result = wlmiojs.unpackRegisterAccess(b);
               if(result.type != 10)
               { done("Error communicating with module"); }
@@ -353,7 +353,7 @@ module.exports = function(RED)
             if(r < 0)
             { done("Error communicating with module"); }
             else
-            { 
+            {
               const result = wlmiojs.unpackRegisterAccess(b);
               if(result.type != 9)
               { done("Error communicating with module"); }
@@ -378,7 +378,7 @@ module.exports = function(RED)
       wlmiojs.registerAccess(id, reg, buffer, function(r, b)
         {
           if(r < 0)
-          { 
+          {
             node.error("Failed to configure channel");
             return;
           }
@@ -493,7 +493,7 @@ module.exports = function(RED)
             if(r < 0)
             { done("Error communicating with module"); }
             else
-            { 
+            {
               const result = wlmiojs.unpackRegisterAccess(b);
               if(result.type != 10)
               { done("Error communicating with module"); }
@@ -518,7 +518,7 @@ module.exports = function(RED)
       wlmiojs.registerAccess(id, reg, buffer, function(r, b)
         {
           if(r < 0)
-          { 
+          {
             node.error("Failed to configure channel");
             return;
           }
@@ -599,7 +599,7 @@ module.exports = function(RED)
             if(r < 0)
             { done("Error communicating with module"); }
             else
-            { 
+            {
               const result = wlmiojs.unpackRegisterAccess(b);
               if(result.type != 9 && result.type != 10)
               { done("Error communicating with module"); }
@@ -627,7 +627,7 @@ module.exports = function(RED)
       wlmiojs.registerAccess(id, reg, buffer, function(r, b)
         {
           if(r < 0)
-          { 
+          {
             node.error("Failed to configure channel");
             return;
           }
@@ -652,5 +652,55 @@ module.exports = function(RED)
     doConfig();
   }
   RED.nodes.registerType("wlmio-6090", WLMIO6090);
-};
 
+
+  function WLMIO6180(config)
+  {
+    RED.nodes.createNode(this, config);
+    const node = this;
+    const id = parseInt(config.nid);
+    const channel = parseInt(config.channel);
+
+    node.on("input", function(msg, send, done)
+      {
+        const ni = wlmioNodes[id];
+        if(!ni.status)
+        {
+          done("Missing module");
+          return;
+        }
+        else if(ni.info == undefined)
+        { return; }
+        else if(ni.info == null || ni.info.name != "com.widgetlords.mio.6180")
+        {
+          done("Incorrect module installed");
+          return;
+        }
+
+        const buffer = wlmiojs.packRegisterAccess(0, null);
+        const reg = "ch" + channel + ".input";
+        const r = wlmiojs.registerAccess(id, reg, buffer, function(r, b)
+          {
+            if(r < 0)
+            { done("Error communicating with module"); }
+            else
+            {
+              const result = wlmiojs.unpackRegisterAccess(b);
+              if(result.type != 10)
+              { done("Error communicating with module"); }
+              else
+              {
+                msg.payload = result.value[0];
+                send(msg);
+                done();
+              }
+            }
+          }
+        );
+        if(r < 0)
+        { done("Error communicating with module"); }
+      }
+    );
+  }
+  RED.nodes.registerType("wlmio-6180", WLMIO6180);
+};
