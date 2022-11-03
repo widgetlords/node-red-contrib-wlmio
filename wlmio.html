@@ -597,3 +597,50 @@ RED.nodes.registerType("wlmio-status", {
     }
   });
 </script>
+
+
+<script type="text/html" data-template-name="wlmio-6190">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-nid"><i class="fa fa-bookmark"></i> Node ID</label>
+    <input type="text" id="node-input-nid" placeholder="0..127">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-bookmark"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+</script>
+
+
+<script type="text/html" data-help-name="wlmio-6190">
+    <p>3 Point RTD Input Module</p>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType("wlmio-6190", {
+    category: "WLMIO",
+    color: "#008cfd",
+    defaults: {
+      name: { value: "" },
+      nid: { value: "", validate: v => !!v && v >= 0 && v < 128 },
+      channel: { value: "1" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "arrow-in.png",
+    align: "left",
+    label: function() {
+      return this.name || "wlmio-6190";
+    }
+  });
+</script>

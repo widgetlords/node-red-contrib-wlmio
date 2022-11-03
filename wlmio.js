@@ -704,3 +704,81 @@ module.exports = function(RED)
   }
   RED.nodes.registerType("wlmio-6180", WLMIO6180);
 };
+
+
+function WLMIO6190(config)
+  {
+    RED.nodes.createNode(this, config);
+    const node = this;
+    const id = parseInt(config.nid);
+    const channel = parseInt(config.channel);
+
+    node.on("input", function(msg, send, done)
+      {
+        const ni = wlmioNodes[id];
+        if(!ni.status)
+        {
+          done("Missing module");
+          return;
+        }
+        else if(ni.info == undefined)
+        { return; }
+        else if (ni.info == null || ni.info.name != "com.widgetlords.mio.6190") {
+          done("Incorrect module installed");
+          return;
+        }
+
+        const buffer = wlmiojs.packRegisterAccess(0, null);
+        const reg = "ch" + channel + ".input";
+        const r = wlmiojs.registerAccess(id, reg, buffer, function(r, b)
+          {
+            if(r < 0)
+            { done("Error communicating with module"); }
+            else
+            {
+              const result = wlmiojs.unpackRegisterAccess(b);
+              if (result.type != 9)
+                done("Error communicating with module");
+              else
+              {
+                msg.payload = result.value[0];
+                send(msg);
+                done();
+              }
+            }
+          }
+        );
+        if(r < 0)
+        { done("Error communicating with module"); }
+      }
+    );
+
+    function doConfig()
+    {
+      let buffer = wlmiojs.packRegisterAccess(11, [ 1 ]);
+      let reg = "ch" + channel + ".enabled";
+      wlmiojs.registerAccess(id, reg, buffer, function(r, b)
+        {
+          if(r < 0)
+          {
+            node.error("Failed to configure channel");
+            return;
+          }
+        }
+      );
+    }
+    registerCallback(id, doConfig);
+
+    node.on("close", function()
+      {
+        const buffer = wlmiojs.packRegisterAccess(11, [ 0 ]);
+        const reg = "ch" + channel + ".enabled";
+        wlmiojs.registerAccess(id, reg, buffer, function(r, b) {});
+
+        deregisterCallback(id, doConfig);
+      }
+    );
+
+    doConfig();
+  }
+  RED.nodes.registerType("wlmio-6190", WLMIO6190);
