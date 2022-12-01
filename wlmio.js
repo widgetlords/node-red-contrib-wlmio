@@ -703,10 +703,9 @@ module.exports = function(RED)
     );
   }
   RED.nodes.registerType("wlmio-6180", WLMIO6180);
-};
 
 
-function WLMIO6190(config)
+  function WLMIO6190(config)
   {
     RED.nodes.createNode(this, config);
     const node = this;
@@ -782,3 +781,4 @@ function WLMIO6190(config)
     doConfig();
   }
   RED.nodes.registerType("wlmio-6190", WLMIO6190);
+};
